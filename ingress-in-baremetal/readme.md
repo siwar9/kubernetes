@@ -32,7 +32,7 @@ justk8s-master@master:~$ kubectl apply -f https://raw.githubusercontent.com/meta
 
 ```
 
-Now we must configure the metalLB using configmap object. In this configmap we give the address pool that will be used as LoadBalancer IP! Also the type of the Load Balancer.
+Now we must configure the metalLB using configmap object. In this configmap we give the address pool that will be used as LoadBalancer IP! Also the type of the Load Balancer (metalLB supports two LoadBalancing modes : Layer 2 mode and BGP mode. In our case we will use the Layer 2 mode).
 
 Create the ConfigMap manifest containing metalLB configuration:
 ```YAML 
