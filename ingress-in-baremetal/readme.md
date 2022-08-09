@@ -28,25 +28,8 @@ MetalLB can be deployed either with a simple Kubernetes manifest or with Helm.
 
 ```bash
 justk8s-master@master:~$ kubectl apply -f https://raw.githubusercontent.com/metallb/metallb/v0.12.1/manifests/namespace.yaml
-namespace/metallb-system created
 justk8s-master@master:~$ kubectl apply -f https://raw.githubusercontent.com/metallb/metallb/v0.12.1/manifests/metallb.yaml
-Warning: policy/v1beta1 PodSecurityPolicy is deprecated in v1.21+, unavailable in v1.25+
-podsecuritypolicy.policy/controller created
-podsecuritypolicy.policy/speaker created
-serviceaccount/controller created
-serviceaccount/speaker created
-clusterrole.rbac.authorization.k8s.io/metallb-system:controller created
-clusterrole.rbac.authorization.k8s.io/metallb-system:speaker created
-role.rbac.authorization.k8s.io/config-watcher created
-role.rbac.authorization.k8s.io/pod-lister created
-role.rbac.authorization.k8s.io/controller created
-clusterrolebinding.rbac.authorization.k8s.io/metallb-system:controller created
-clusterrolebinding.rbac.authorization.k8s.io/metallb-system:speaker created
-rolebinding.rbac.authorization.k8s.io/config-watcher created
-rolebinding.rbac.authorization.k8s.io/pod-lister created
-rolebinding.rbac.authorization.k8s.io/controller created
-daemonset.apps/speaker created
-deployment.apps/controller created
+
 ```
 
 Now we must configure the metalLB using configmap object. In this configmap we give the address pool that will be used as LoadBalancer IP! Also the type of the Load Balancer.
