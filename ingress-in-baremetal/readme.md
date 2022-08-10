@@ -94,3 +94,27 @@ job.batch/ingress-nginx-admission-patch created
 ingressclass.networking.k8s.io/nginx configured
 validatingwebhookconfiguration.admissionregistration.k8s.io/ingress-nginx-admission configured
 ```
+After waiting a few minute until the controller is ready, we must check all the services and deployments of the ingress-nginx namespace again ! You must find an output similar to the following :
+
+```bash
+justk8s-master@master:~$ kubectl get all -n ingress-nginx
+NAME                                            READY   STATUS    RESTARTS      AGE
+pod/ingress-nginx-controller-7575567f98-zdcpc   1/1     Running   2 (10m ago)   19h
+
+NAME                                         TYPE           CLUSTER-IP       EXTERNAL-IP     PORT(S)                      AGE
+service/ingress-nginx-controller             LoadBalancer   10.105.187.233   192.168.1.240   80:32660/TCP,443:30560/TCP   20h
+service/ingress-nginx-controller-admission   ClusterIP      10.104.201.85    <none>          443/TCP                      20h
+
+NAME                                       READY   UP-TO-DATE   AVAILABLE   AGE
+deployment.apps/ingress-nginx-controller   1/1     1            1           20h
+
+NAME                                                  DESIRED   CURRENT   READY   AGE
+replicaset.apps/ingress-nginx-controller-7575567f98   1         1         1       20h
+
+NAME                                       COMPLETIONS   DURATION   AGE
+job.batch/ingress-nginx-admission-create   0/1           20h        20h
+job.batch/ingress-nginx-admission-patch    0/1           20h        20h
+```
+The ingress controller is ready and on running state! also is exposed with Load Balancer and it have a Extenal-IP `192.168.1.240`.
+
+Now we can deploy an ingress object without any problem ! 
