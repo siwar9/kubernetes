@@ -142,6 +142,7 @@ Hello, world!
 Version: 2.0.0
 Hostname: my-deployment-dbd86c8c4-h5wsf
 ```
+## Let's delete the Pod and check the ip address
 
 ## Using kubectl expose to create a Service
 As an alternative to writing a Service manifest, you can create a Service by using kubectl expose to expose a Deployment.
@@ -152,6 +153,7 @@ To expose my-deployment, shown earlier in this topic, you could enter this comma
 kubectl expose deployment my-deployment --name my-cip-service \
     --type ClusterIP --protocol TCP --port 80 --target-port 8080
 ```
+
 
 
 *Kubernetes Official Documentation: [Using a Service to Expose Your App](https://kubernetes.io/docs/tutorials/kubernetes-basics/expose/expose-intro/)*
