@@ -10,16 +10,19 @@ In bare-metal K8s cluster, unless we deploy an Ingress Controller into our Kuber
 ## Bare metal considerations
 In traditional cloud environments, where network load balancers are available on-demand, a single Kubernetes manifest suffices to provide a single point of contact to the NGINX Ingress controller to external clients and, indirectly, to any application running inside the cluster. Bare-metal environments lack this commodity, requiring a slightly different setup to offer the same kind of access to external consumers.
 
-![Figure1](ingressCloud.png)
 
-![Figure2](ingressBare.png)
+<img src="ingressCloud.png"  width=50% height=50%>
+
+<img src="ingressBare.png"  width=50% height=50%>
 
 ## A pure software solution: MetalLB
 MetalLB provides a network load-balancer implementation for Kubernetes clusters that do not run on a supported cloud provider, effectively allowing the usage of LoadBalancer Services within any cluster.
 
 This figure demonstrates how to use the Layer 2 configuration mode of MetalLB together with the NGINX Ingress controller in a Kubernetes cluster that has publicly accessible nodes. In this mode, one node attracts all the traffic for the ingress-nginx Service IP.
 
-![Figure3](metalLB.png)
+
+<img src="metalLB.png"  width=50% height=50%>
+
 
 *Reference : [Nginx Ingress Controller](https://kubernetes.github.io/ingress-nginx/deploy/baremetal/)*
 
