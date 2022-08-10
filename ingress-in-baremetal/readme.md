@@ -21,6 +21,8 @@ This figure demonstrates how to use the Layer 2 configuration mode of MetalLB to
 
 ![Figure3](metalLB.png)
 
+*Reference : [Nginx Ingress Controller](https://kubernetes.github.io/ingress-nginx/deploy/baremetal/)*
+
 ## Installing MetalLB 
 MetalLB can be deployed either with a simple Kubernetes manifest or with Helm.
 
@@ -56,3 +58,34 @@ configmap/config created
 ```
 
 Reference : *[Installation Guide](https://metallb.universe.tf/installation/)*
+
+## Install NGINX Ingress Controller
+There are multiple ways to install the NGINX ingress controller:
+
+- with Helm, using the project repository chart;
+- with kubectl apply, using YAML manifests;
+- with specific addons (e.g. for minikube or MicroK8s).
+
+### Using the YAML manifest file
+```bash
+justk8s-master@master:~$ kubectl apply -f https://raw.githubusercontent.com/kubernetes/ingress-nginx/controller-v1.2.0/deploy/static/provider/cloud/deploy.yaml
+namespace/ingress-nginx unchanged
+serviceaccount/ingress-nginx configured
+serviceaccount/ingress-nginx-admission configured
+role.rbac.authorization.k8s.io/ingress-nginx configured
+role.rbac.authorization.k8s.io/ingress-nginx-admission configured
+clusterrole.rbac.authorization.k8s.io/ingress-nginx configured
+clusterrole.rbac.authorization.k8s.io/ingress-nginx-admission configured
+rolebinding.rbac.authorization.k8s.io/ingress-nginx configured
+rolebinding.rbac.authorization.k8s.io/ingress-nginx-admission configured
+clusterrolebinding.rbac.authorization.k8s.io/ingress-nginx configured
+clusterrolebinding.rbac.authorization.k8s.io/ingress-nginx-admission configured
+configmap/ingress-nginx-controller configured
+service/ingress-nginx-controller created
+service/ingress-nginx-controller-admission created
+deployment.apps/ingress-nginx-controller created
+job.batch/ingress-nginx-admission-create created
+job.batch/ingress-nginx-admission-patch created
+ingressclass.networking.k8s.io/nginx configured
+validatingwebhookconfiguration.admissionregistration.k8s.io/ingress-nginx-admission configured
+```

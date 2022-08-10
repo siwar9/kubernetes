@@ -22,11 +22,6 @@ You can fetch that script, and then execute it locally. It's well documented so 
 justk8s-master@master:~$ curl -fsSL -o get_helm.sh https://raw.githubusercontent.com/helm/helm/main/scripts/get-helm-3
 justk8s-master@master:~$ chmod 700 get_helm.sh
 justk8s-master@master:~$ ./get_helm.sh
-Downloading https://get.helm.sh/helm-v3.9.2-linux-amd64.tar.gz
-Verifying checksum... Done.
-Preparing to install helm into /usr/local/bin
-[sudo] password for justk8s-master:
-helm installed into /usr/local/bin/helm
 ``` 
 For more installation methods, check out *[the installation guide](https://helm.sh/docs/intro/install/)*.
 
