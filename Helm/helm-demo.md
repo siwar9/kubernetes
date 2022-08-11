@@ -23,11 +23,14 @@ deployment.yaml  ingress.yaml  service.yaml
 ```
 The depoyment.yaml file contains a simple nginx deployment :
 ```YAML
-apiVersion: v1
+apiVersion: apps/v1
 kind: Deployment
 metadata: 
   name: my-nginx-deployment
 spec:
+  selector:
+    matchLabels:
+      app: nginx
   replicas: 3
   template:
     metadata:
@@ -39,6 +42,7 @@ spec:
         image: nginx:1.14.2
         ports:
         - containerPort: 80
+
 ```
 And the service.yaml file :
 ``` YAML
@@ -57,19 +61,37 @@ spec:
 ```
 And the ingress.yaml :
 ```YAML
-apiVersion: v1
+apiVersion: networking.k8s.io/v1
 kind: Ingress
 metadata:
   name: my-nginx-ingress
   annotations:
     http.port: "443"
 spec:
-  backend:
-    serviceName: nginx
-    servicePort: 80
+  rules:
+  - http:
+      paths:
+      - path: /testpath
+        pathType: Prefix
+        backend:
+          service:
+            name: test
+            port:
+              number: 80
+
 ```
 We're exposing port 443 on our ingress.
 
 Next is `helm install`:
 ```bash 
+justk8s-master@master:~/helm-demo$ helm install helm-demo ./
+NAME: helm-demo
+LAST DEPLOYED: Thu Aug 11 09:00:56 2022
+NAMESPACE: default
+STATUS: deployed
+REVISION: 1
+TEST SUITE: None
+```
+Yey! 
+
 
