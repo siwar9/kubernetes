@@ -68,3 +68,8 @@ spec:
     serviceName: nginx
     servicePort: 80
 ```
+We're exposing port 443 on our ingress.
+
+Next is `helm install`:
+```bash 
+
