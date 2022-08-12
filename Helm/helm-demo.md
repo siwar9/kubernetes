@@ -66,8 +66,10 @@ kind: Ingress
 metadata:
   name: my-nginx-ingress
   annotations:
+    nginx.ingress.kubernetes.io/rewrite-target: /
     http.port: "443"
 spec:
+  ingressClassName: nginx
   rules:
   - http:
       paths:
@@ -75,7 +77,7 @@ spec:
         pathType: Prefix
         backend:
           service:
-            name: test
+            name: my-nginx-service
             port:
               number: 80
 
@@ -84,15 +86,32 @@ We're exposing port 443 on our ingress.
 
 Next is `helm install`:
 ```bash 
-justk8s-master@master:~/helm-demo$ helm install helm-demo ./
-NAME: helm-demo
-LAST DEPLOYED: Thu Aug 11 09:00:56 2022
+justk8s-master@master:~$ helm install --generate-name helm-demo/
+NAME: helm-demo-1660310990
+LAST DEPLOYED: Fri Aug 12 06:29:50 2022
 NAMESPACE: default
 STATUS: deployed
 REVISION: 1
 TEST SUITE: None
 ```
 So now with Helm and thanks to only one command line tool `helm install`, we were able to deploy our app very easily and very fast.
+```bash
+justk8s-master@master:~$ kubectl get all
+NAME                                      READY   STATUS              RESTARTS   AGE
+pod/my-nginx-deployment-9456bbbf9-c74rs   0/1     ContainerCreating   0          11s
+pod/my-nginx-deployment-9456bbbf9-k4cdb   0/1     ContainerCreating   0          11s
+pod/my-nginx-deployment-9456bbbf9-mm7dm   0/1     ContainerCreating   0          11s
+
+NAME                       TYPE        CLUSTER-IP       EXTERNAL-IP   PORT(S)   AGE
+service/kubernetes         ClusterIP   10.96.0.1        <none>        443/TCP   22m
+service/my-nginx-service   ClusterIP   10.100.146.193   <none>        80/TCP    11s
+
+NAME                                  READY   UP-TO-DATE   AVAILABLE   AGE
+deployment.apps/my-nginx-deployment   0/3     3            0           11s
+
+NAME                                            DESIRED   CURRENT   READY   AGE
+replicaset.apps/my-nginx-deployment-9456bbbf9   3         3         0       11s
+```
 
 The usual way to do this with kubectl is by executing the `kubectl apply` command line for every resource.
 
