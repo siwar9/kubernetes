@@ -57,7 +57,6 @@ spec:
   - name: main
     protocol: TCP
     port: 80
-    targetPort: 8080
 ```
 And the ingress.yaml :
 ```YAML
@@ -112,7 +111,9 @@ deployment.apps/my-nginx-deployment   0/3     3            0           11s
 NAME                                            DESIRED   CURRENT   READY   AGE
 replicaset.apps/my-nginx-deployment-9456bbbf9   3         3         0       11s
 ```
+We can check our app running in the browser using the ingress ip `192.168.1.240`:
+
+<img src="nginx.png" width=50% height=50%>
 
 The usual way to do this with kubectl is by executing the `kubectl apply` command line for every resource.
 
-Another thing about Helm is that 
