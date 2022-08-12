@@ -1,9 +1,4 @@
-How do we version control a Deployment?
-How do we keep track of them?
-This is where Helm comes in
-a chart is a group of manifest files (state of Deplolyment that youj have)
-Demo :
-l have a minikube set up 
+Helm is a package manager for Kubernetes. Helm is the K8s equivalent of yum or apt. Helm deploys charts, which you can think of as a packaged application. It is a collection of all your versioned, pre-configured application resources which can be deployed as one unit. You can then deploy another version of the chart with a different set of configuration.
 
 ## Install Helm
 
