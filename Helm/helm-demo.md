@@ -111,7 +111,7 @@ deployment.apps/my-nginx-deployment   0/3     3            0           11s
 NAME                                            DESIRED   CURRENT   READY   AGE
 replicaset.apps/my-nginx-deployment-9456bbbf9   3         3         0       11s
 ```
-We can check our app running in the browser using the ingress ip `192.168.1.240`:
+We can check our app running in the browser using the ingress ip `192.168.1.240` and specifying the path `/testpath`:
 
 <img src="nginx.png" width=50% height=50%>
 
