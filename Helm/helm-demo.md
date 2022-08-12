@@ -117,3 +117,85 @@ We can check our app running in the browser using the ingress ip `192.168.1.240`
 
 The usual way to do this with kubectl is by executing the `kubectl apply` command line for every resource.
 
+Another important feature in Helm are placeholders!
+so if we look at another deployment.yaml file for example :
+```Yaml
+apiVersion: apps/v1
+kind: Deployment
+metadata: 
+  name: my-nginx-deployment
+spec:
+  selector:
+    matchLabels:
+      app: nginx
+  replicas: {{.Values.scale}}
+  template:
+    metadata:
+      labels:
+        app: nginx
+    spec:
+      containers:
+      - name: nginx
+        image: nginx:1.14.2
+        ports:
+        - containerPort: 80
+```
+The `{{.Values.scale}}`placeholder makes it possible to modify the configuration without having to edit the actual manifest file every time.
+
+So whatever the value of scale is in `values.yaml` file is going to be the value of the configuration file.
+
+The `values.yaml` file :
+```bash
+justk8s-master@master:~/helming-once-more$ cat values.yaml
+scale: 3
+```
+
+And now let's install our app again :
+```bash
+justk8s-master@master:~$ helm install another-demo helming-once-more/
+NAME: another-demo
+LAST DEPLOYED: Fri Aug 12 11:48:53 2022
+NAMESPACE: default
+STATUS: deployed
+REVISION: 1
+TEST SUITE: None
+```
+Just to check that we have our pods up and running :
+```bash
+justk8s-master@master:~$ kubectl get pods
+NAME                                  READY   STATUS    RESTARTS   AGE
+my-nginx-deployment-9456bbbf9-mx45n   1/1     Running   0          3m9s
+my-nginx-deployment-9456bbbf9-rqkmw   1/1     Running   0          3m9s
+my-nginx-deployment-9456bbbf9-tl4wj   1/1     Running   0          3m9s
+```
+So thanks to the scale value in the values.yaml file, we now have 3 pods.
+
+For some reason or another, we needed to scale up our up :
+```bash 
+justk8s-master@master:~$ helm upgrade --set scale=5 another-demo ./helming-once-more/
+Release "another-demo" has been upgraded. Happy Helming!
+NAME: another-demo
+LAST DEPLOYED: Fri Aug 12 11:55:14 2022
+NAMESPACE: default
+STATUS: deployed
+REVISION: 2
+TEST SUITE: None
+```
+```bash 
+justk8s-master@master:~$ kubectl get pod
+NAME                                  READY   STATUS    RESTARTS   AGE
+my-nginx-deployment-9456bbbf9-7ddlm   1/1     Running   0          95s
+my-nginx-deployment-9456bbbf9-mx45n   1/1     Running   0          8m9s
+my-nginx-deployment-9456bbbf9-rqkmw   1/1     Running   0          8m9s
+my-nginx-deployment-9456bbbf9-tl4wj   1/1     Running   0          8m9s
+my-nginx-deployment-9456bbbf9-tpsqv   1/1     Running   0          96s
+```
+
+To finish off, we will delete our app :
+```bash 
+justk8s-master@master:~$ helm list
+NAME           NAMESPACE       REVISION        UPDATED                                 STATUS          CHART                   APP VERSION
+another-demo    default         2               2022-08-12 11:55:14.913503686 -0700 PDT deployed        another-demo-1.0.0
+justk8s-master@master:~$ helm uninstall another-demo
+release "another-demo" uninstalled
+```
