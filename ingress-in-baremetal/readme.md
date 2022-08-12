@@ -74,47 +74,49 @@ There are multiple ways to install the NGINX ingress controller:
 ### Using the YAML manifest file
 ```bash
 justk8s-master@master:~$ kubectl apply -f https://raw.githubusercontent.com/kubernetes/ingress-nginx/controller-v1.2.0/deploy/static/provider/cloud/deploy.yaml
-namespace/ingress-nginx unchanged
-serviceaccount/ingress-nginx configured
-serviceaccount/ingress-nginx-admission configured
-role.rbac.authorization.k8s.io/ingress-nginx configured
-role.rbac.authorization.k8s.io/ingress-nginx-admission configured
-clusterrole.rbac.authorization.k8s.io/ingress-nginx configured
-clusterrole.rbac.authorization.k8s.io/ingress-nginx-admission configured
-rolebinding.rbac.authorization.k8s.io/ingress-nginx configured
-rolebinding.rbac.authorization.k8s.io/ingress-nginx-admission configured
-clusterrolebinding.rbac.authorization.k8s.io/ingress-nginx configured
-clusterrolebinding.rbac.authorization.k8s.io/ingress-nginx-admission configured
-configmap/ingress-nginx-controller configured
+namespace/ingress-nginx created
+serviceaccount/ingress-nginx created
+serviceaccount/ingress-nginx-admission created
+role.rbac.authorization.k8s.io/ingress-nginx created
+role.rbac.authorization.k8s.io/ingress-nginx-admission created
+clusterrole.rbac.authorization.k8s.io/ingress-nginx created
+clusterrole.rbac.authorization.k8s.io/ingress-nginx-admission created
+rolebinding.rbac.authorization.k8s.io/ingress-nginx created
+rolebinding.rbac.authorization.k8s.io/ingress-nginx-admission created
+clusterrolebinding.rbac.authorization.k8s.io/ingress-nginx created
+clusterrolebinding.rbac.authorization.k8s.io/ingress-nginx-admission created
+configmap/ingress-nginx-controller created
 service/ingress-nginx-controller created
 service/ingress-nginx-controller-admission created
 deployment.apps/ingress-nginx-controller created
 job.batch/ingress-nginx-admission-create created
 job.batch/ingress-nginx-admission-patch created
-ingressclass.networking.k8s.io/nginx configured
-validatingwebhookconfiguration.admissionregistration.k8s.io/ingress-nginx-admission configured
+ingressclass.networking.k8s.io/nginx created
+validatingwebhookconfiguration.admissionregistration.k8s.io/ingress-nginx-admission created
 ```
 After waiting a few minute until the controller is ready, we must check all the services and deployments of the ingress-nginx namespace again ! You must find an output similar to the following :
 
 ```bash
 justk8s-master@master:~$ kubectl get all -n ingress-nginx
-NAME                                            READY   STATUS    RESTARTS      AGE
-pod/ingress-nginx-controller-7575567f98-zdcpc   1/1     Running   2 (10m ago)   19h
+NAME                                            READY   STATUS      RESTARTS   AGE
+pod/ingress-nginx-admission-create-gnp2c        0/1     Completed   0          37s
+pod/ingress-nginx-admission-patch-s8drh         0/1     Completed   1          37s
+pod/ingress-nginx-controller-7575567f98-42qdg   1/1     Running     0          37s
 
-NAME                                         TYPE           CLUSTER-IP       EXTERNAL-IP     PORT(S)                      AGE
-service/ingress-nginx-controller             LoadBalancer   10.105.187.233   192.168.1.240   80:32660/TCP,443:30560/TCP   20h
-service/ingress-nginx-controller-admission   ClusterIP      10.104.201.85    <none>          443/TCP                      20h
+NAME                                         TYPE           CLUSTER-IP      EXTERNAL-IP     PORT(S)                      AGE
+service/ingress-nginx-controller             LoadBalancer   10.110.78.165   192.168.1.240   80:32399/TCP,443:32414/TCP   40s
+service/ingress-nginx-controller-admission   ClusterIP      10.107.6.130    <none>          443/TCP                      39s
 
 NAME                                       READY   UP-TO-DATE   AVAILABLE   AGE
-deployment.apps/ingress-nginx-controller   1/1     1            1           20h
+deployment.apps/ingress-nginx-controller   1/1     1            1           39s
 
 NAME                                                  DESIRED   CURRENT   READY   AGE
-replicaset.apps/ingress-nginx-controller-7575567f98   1         1         1       20h
+replicaset.apps/ingress-nginx-controller-7575567f98   1         1         1       38s
 
 NAME                                       COMPLETIONS   DURATION   AGE
-job.batch/ingress-nginx-admission-create   0/1           20h        20h
-job.batch/ingress-nginx-admission-patch    0/1           20h        20h
+job.batch/ingress-nginx-admission-create   1/1           13s        38s
+job.batch/ingress-nginx-admission-patch    1/1           15s        38s
 ```
-The ingress controller is ready and on running state! also is exposed with Load Balancer and it have a Extenal-IP `192.168.1.240`.
+Finally, the ingress controller is ready and on running state! also is exposed with Load Balancer and it has an Extenal-IP `192.168.1.240`.
 
 Now we can deploy an ingress object without any problem ! 
