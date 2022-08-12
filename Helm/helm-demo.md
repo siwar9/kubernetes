@@ -92,6 +92,8 @@ STATUS: deployed
 REVISION: 1
 TEST SUITE: None
 ```
-Yey! 
+So now with Helm and thanks to only one command line tool `helm install`, we were able to deploy our app very easily and very fast.
 
+The usual way to do this with kubectl is by executing the `kubectl apply` command line for every resource.
 
+Another thing about Helm is that 
