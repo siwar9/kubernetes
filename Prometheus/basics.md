@@ -19,7 +19,7 @@ The Prometheus Server has the following elements:
 For each target, Prometheus serveils specific **units**. For a Linux server it could be CPU status, Memory/Disk space usage. For an app it could be number of excpetions/requests, or request durations.
 
 A unit you would like to monitor for a specific target is called **metric**. And a metric is what gets into Prometheus database component. Prometheus provides human-readable text based format for these metrics. Metrics entries(data) has **HELP** or **TYPE** attributes to increase its readability.
-- **HELP :** The description of chat the metrics is
+- **HELP :** The description of what the metrics is
 - **TYPE :** There are 3 types ; **Counter** for frequency (how many times x happened?), **Gouge** for value (what is the value of x now), and **Histogram** for details (how long or large?)
 
 ## How does Prometheus collect those metrics from targets?
