@@ -7,6 +7,8 @@ Prometheus is designed for reliability, to be the system you go to during an out
 
 Prometheus values reliability. You can always view what statistics are available about your system, even under failure conditions. If you need 100% accuracy, such as for per-request billing, Prometheus is not a good choice as the collected data will likely not be detailed and complete enough.
 
+## Components
+
 **Main Component :** Prometheus Server (does the actual monitoring work!)
 
 The Prometheus Server has the following elements:
