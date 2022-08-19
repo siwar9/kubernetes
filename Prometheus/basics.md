@@ -1,5 +1,6 @@
 ## Basics for Prometheus
 Prometheus is an open-source systems monitoring and alerting toolkit. Monitoring targets, e.g: Linux/windows server, single app, apache server...
+
 Prometheus works well for recording any **purely numeric time series**. It fits both machine-centric monitoring as well as monitoring of highly dynamic service-oriented architectures. In a world of microservices, its support for **multi-dimensional** data collection and querying is a particular strength.
 
 Prometheus is designed for reliability, to be the system you go to during an outage to allow you to quickly diagnose problems.
