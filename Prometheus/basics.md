@@ -19,8 +19,17 @@ The Prometheus Server has the following elements:
 For each target, Prometheus serveils specific **units**. For a Linux server it could be CPU status, Memory/Disk space usage. For an app it could be number of excpetions/requests, or request durations.
 
 A unit you would like to monitor for a specific target is called **metric**. And a metric is what gets into Prometheus database component. Prometheus provides human-readable text based format for these metrics. Metrics entries(data) has **HELP** or **TYPE** attributes to increase its readability.
-- **HELP :** The description of what the metrics is
-- **TYPE :** There are 3 types ; **Counter** for frequency (how many times x happened?), **Gouge** for value (what is the value of x now), and **Histogram** for details (how long or large?)
+- **HELP :** The description of what the metrics is.
+- **TYPE :** There are 3 types ; **Counter** for frequency (how many times x happened?), **Gouge** for value (what is the value of x now), and **Histogram** for details (how long or large?).
 
 ## How does Prometheus collect those metrics from targets?
+Prometheus pulls the metrics data from the targets from an HTTP endpoint (is by defautly the hostaddress/metrics for example: 192.168.1.18/metrics). So the target has to expose that **/metrics** endpoint! (PAY ATTENTION TO SPELLING).
+
+
+Some services expose **/metrics** endpoint by default. However, some other services require an extra component to be able to expose native prometheus endpoints. Which is **Exporter**.
+
+Exporter fecthes metrics from your target and converts them into a format that Prometheus understands. Then exposes these metrics through their endpoint (/metrics) where Prometheus can scrape them.
+
+*Prometheus' official exporters list :[Here](https://prometheus.io/docs/instrumenting/exporters/)*
+
 
